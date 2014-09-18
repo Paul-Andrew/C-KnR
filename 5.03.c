@@ -1,4 +1,5 @@
-void strcat(char * s,char * t)
+#include <stdio.h>
+void strrcat(char * s,char * t)
 {
     int i,j;
     for (i = 0; s[i];i++)
@@ -7,22 +8,34 @@ void strcat(char * s,char * t)
         ;
 }
 //5.04
-int strlen(char*s)
+int strrlen(char*s)
 {
     char *p = s;
 
     while(*p)
-        p++
+        p++;
     return p - s;
 }
 
-int strend(char *s, char *t)
+int strrend(char *s, char *t)
 {
-    if (i = strlen(s) >= j = strlen(t))
+    int i,j;
+    i = strrlen(s);
+    j = strrlen(t);
+    if (i >= j)
         for (;s[i] == t[j];i--,j--) {
             if (j == 0) {
                 return 1;
             }
         }
     return 0;
+}
+
+void main(){
+    char s[1000] = "this is a ";
+    char *t = "string";
+    strrcat(s,t);
+    printf("%s",s);
+    int i = strrend(s,t);
+    printf("%i",i);
 }

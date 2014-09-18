@@ -1,4 +1,10 @@
 #include <ctype.h>
+#include <stdio.h>
+#define BUFSIZE 1000
+
+char buf[BUFSIZE];
+int bufp = 0;
+
 int getch(void);
 void ungetch(int);
 
@@ -9,7 +15,7 @@ int getint(int *pn)
     while (isspace(c = getch()))
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-') {
-        ungetch();
+        ungetch(c);
         return 0;
     }
     sign = (c =='-') ? -1 : 1;
@@ -24,3 +30,23 @@ int getint(int *pn)
     return c;
 }
 
+int getch(void)
+{
+  return (bufp > 0) ? buf[--bufp] : getchar();
+}
+
+void ungetch(int c )
+{
+  if (bufp >= BUFSIZE)
+    printf("ungetch: too many characters\n");
+  else
+    buf[bufp++] = c;
+}
+
+int main()
+{
+  int a;
+  int i = getint(&a);
+  printf("%i %i\n",i,a);
+
+}
